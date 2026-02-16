@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Генератор QR-коду</title>
+<!-- Подключение PWA манифеста -->
+<link rel="manifest" href="manifest.json">
+
+<!-- Регистрация Service Worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(() => console.log('Service Worker зарегистрирован'));
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+input { padding: 10px; font-size: 16px; width: 250px; }
+button { padding: 10px 20px; font-size: 16px; margin-left: 10px; }
+#qrcode { margin: 20px auto; }
+</style>
+</head>
+<body>
+
+<h2>Генератор QR-коду</h2>
+<p>Введіть номер карти або IBAN:</p>
+<input type="text" id="cardInput" placeholder="Наприклад 4441114407876992">
+<button onclick="generateQR()">Створити QR</button>
+
+<div id="qrcode"></div>
+
+<script>
+function generateQR() {
+    const cardNumber = document.getElementById("cardInput").value.trim();
+    if (!cardNumber) {
+        alert("Введіть номер карти!");
+        return;
+    }
+
+    // Ссылка на страницу покупателя с номером в параметре (можно оставить для дальнейшего развития)
+    const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}`;
+
+    // Очищаем старый QR
+    document.getElementById("qrcode").innerHTML = "";
+
+    // Генерация QR-кода
+    new QRCode(document.getElementById("qrcode"), {
+        text: url,
+        width: 256,
+        height: 256,
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    console.log("QR ведет на:", url);
+}
+</script>
+
+</body>
+</html>
