@@ -6,46 +6,79 @@
 <title>Генератор QR-коду</title>
 <!-- Подключение PWA манифеста -->
 <link rel="manifest" href="manifest.json">
-
+<iink rel="icon" href="favicon.ico" sizes="32x32" type="image/x-icon">
 <!-- Регистрация Service Worker -->
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
+  navigator.serviceWorker.register('/service-worker.js')
     .then(() => console.log('Service Worker зарегистрирован'));
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-input { padding: 10px; font-size: 16px; width: 250px; }
-button { padding: 10px 20px; font-size: 16px; margin-left: 10px; }
-#qrcode { margin: 20px auto; }
-  body {
+
+
+body {
   margin: 0;
   background: #000;
   color: #00ff99;
   font-family: monospace;
-}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+} 
 
 .box {
   background: #111;
   border: 2px solid #00ff99;
   border-radius: 15px;
   padding: 25px;
-  width: 90%;
   max-width: 350px;
+  width: 90%;
+  box-sizing: border-box;
+  text-align: center;
 }
-</style>
+
+input, button {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #00ff99;
+  background: #000;
+  color: #00ff99;
+  margin-top: 15px;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #00ff99;
+  color: #000;
+}
+ #qrcode { 
+   display: flex;
+   margin: 20px auto;
+   justify-content: center;
+ }
+
+ </style>
+
 </head>
+
 <body>
-
-<h2>Генератор QR-коду</h2>
-<p>Введіть номер карти або IBAN:</p>
-<input type="text" id="cardInput" placeholder="Наприклад 4441114407876992">
-<button onclick="generateQR()">Створити QR</button>
-
-<div id="qrcode"></div>
-
+<div class="box">
+   <h2>Генератор QR-коду</h2>
+   <p>Введіть номер карти або IBAN:</p>
+   <input type="text" id="cardInput" placeholder="Наприклад 4441114407876992">
+   <button onclick="generateQR()">Створити QR</button>
+   <div id="qrcode"></div>
+</div>
 <script>
 function generateQR() {
     const cardNumber = document.getElementById("cardInput").value.trim();
@@ -63,8 +96,8 @@ function generateQR() {
     // Генерация QR-кода
     new QRCode(document.getElementById("qrcode"), {
         text: url,
-        width: 256,
-        height: 256,
+        width: 180,
+        height: 180,
         correctLevel: QRCode.CorrectLevel.H
     });
 
@@ -73,6 +106,6 @@ function generateQR() {
 </script>
 
 </body>
-
 </html>
+
 
