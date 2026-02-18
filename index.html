@@ -119,8 +119,8 @@ function generateQR() {
             <script>
                 new QRCode(document.getElementById("qrcode"), {
                     text: "${url}",
-                    width: 400,
-                    height: 400,
+                    width: Math.min(window.innerWidth * 0.9, 400),
+                    height: Math.min(window.innerWidth * 0.9, 400),
                     correctLevel: QRCode.CorrectLevel.H
                 });
             <\/script>
@@ -135,6 +135,7 @@ function generateQR() {
 </body>
 
 </html>
+
 
 
 
