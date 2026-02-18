@@ -132,9 +132,89 @@ function generateQR() {
 }
 </script>
 
-</body>
+  
+<script>
+// Список продавцов (id => название)
+const sellers = {
+    "117": "Владимирский, место 117",
+    "118": "Владимирский, место 118",
+    "201": "Житний рынок, место 201"
+};
 
+// Создаем селектор продавца
+const box = document.querySelector(".box");
+const select = document.createElement("select");
+select.id = "sellerSelect";
+select.style.marginTop = "10px";
+select.style.padding = "10px";
+select.style.fontSize = "16px";
+select.style.borderRadius = "8px";
+select.style.border = "2px solid #00ff99";
+select.style.background = "#000";
+select.style.color = "#00ff99";
+
+// Добавляем опции
+for (const key in sellers) {
+    const option = document.createElement("option");
+    option.value = key;
+    option.text = sellers[key];
+    select.appendChild(option);
+}
+
+box.insertBefore(select, document.getElementById("qrcode"));
+
+// Переписываем generateQR только для URL
+const originalGenerateQR = generateQR;
+generateQR = function() {
+    const cardNumber = document.getElementById("cardInput").value.trim();
+    const sellerId = document.getElementById("sellerSelect").value;
+
+    if (!cardNumber) {
+        alert("Введіть номер карти!");
+        return;
+    }
+
+    // Добавляем параметр seller в ссылку
+    const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}&seller=${sellerId}`;
+
+    // В остальном оставляем открытие новой вкладки и генерацию QR
+    const newWindow = window.open("", "_blank");
+
+    newWindow.document.write(`
+        <html>
+        <head>
+            <title>QR Code</title>
+            <style>
+                body {
+                    margin:0;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    height:100vh;
+                    background:white;
+                }
+            </style>
+        </head>
+        <body>
+            <div id="qrcode"></div>
+            <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"><\/script>
+            <script>
+                new QRCode(document.getElementById("qrcode"), {
+                    text: "${url}",
+                    width: Math.min(window.innerWidth * 0.9, 400),
+                    height: Math.min(window.innerWidth * 0.9, 400),
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            <\/script>
+        </body>
+        </html>
+    `);
+    newWindow.document.close();
+};
+</script>
+</body>
 </html>
+
 
 
 
