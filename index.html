@@ -79,34 +79,63 @@ button {
    <button onclick="generateQR()">Створити QR</button>
    <div id="qrcode"></div>
 </div>
+
 <script>
 function generateQR() {
+
     const cardNumber = document.getElementById("cardInput").value.trim();
+
     if (!cardNumber) {
         alert("Введіть номер карти!");
         return;
     }
 
-    // Ссылка на страницу покупателя с номером в параметре (можно оставить для дальнейшего развития)
+    // ВАЖНО — строка должна быть в кавычках
     const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}`;
 
-    // Очищаем старый QR
-    document.getElementById("qrcode").innerHTML = "";
+    // Открываем новую вкладку
+    const newWindow = window.open("", "_blank");
 
-    // Генерация QR-кода
-    new QRCode(document.getElementById("qrcode"), {
-        text: url,
-        width: 180,
-        height: 180,
-        correctLevel: QRCode.CorrectLevel.H
-    });
+    // Создаем простую белую страницу
+    newWindow.document.write(`
+        <html>
+        <head>
+            <title>QR Code</title>
+            <style>
+                body {
+                    margin: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    background: white;
+                }
+            </style>
+        </head>
+        <body>
+            <div id="qrcode"></div>
 
-    console.log("QR ведет на:", url);
+            <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"><\/script>
+            <script>
+                new QRCode(document.getElementById("qrcode"), {
+                    text: "${url}",
+                    width: 300,
+                    height: 300,
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            <\/script>
+        </body>
+        </html>
+    `);
+
+    newWindow.document.close();
 }
 </script>
 
 </body>
+
 </html>
+
 
 
 
