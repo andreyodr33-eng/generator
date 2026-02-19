@@ -72,31 +72,38 @@ button {
 </head>
 
 <body>
+
 <div class="box">
    <h2>Генератор QR-коду</h2>
    <p>Введіть номер карти або IBAN:</p>
    <input type="text" id="cardInput" placeholder="Наприклад 4441114407876992">
+
+   <p>Выберите номер страницы продавца:</p>
+   <input type="number" id="sellerPage" placeholder="Например 1" min="1" max="1000">
+
    <button onclick="generateQR()">Створити QR</button>
    <div id="qrcode"></div>
 </div>
 
 <script>
 function generateQR() {
-
     const cardNumber = document.getElementById("cardInput").value.trim();
+    const sellerPage = document.getElementById("sellerPage").value.trim();
 
     if (!cardNumber) {
         alert("Введіть номер карти!");
         return;
     }
+    if (!sellerPage⠟⠟⠵⠟⠵⠟⠺⠟⠞⠵⠺⠺⠵⠺⠟⠺⠺⠵⠵⠟⠟sellerPage < 1 || sellerPage > 1000) {
+        alert("Введите корректный номер страницы продавца (1-1000)!");
+        return;
+    }
 
-    // ВАЖНО — строка должна быть в кавычках
-    const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}`;
+    // Ссылка на сканер с номером карты и номером страницы продавца
+    const url = https://andreyodr33-eng.github.io/developer/?data=${cardNumber}&seller=${sellerPage};
 
-    // Открываем новую вкладку
+    // Открываем новую вкладку с белой страницей и QR
     const newWindow = window.open("", "_blank");
-
-    // Создаем простую белую страницу
     newWindow.document.write(`
         <html>
         <head>
@@ -133,6 +140,16 @@ function generateQR() {
 </script>
 </body>
 </html>
+   
+   
+   
+   
+   
+
+
+
+
+
 
 
 
