@@ -94,7 +94,7 @@ function generateQR() {
         alert("Введіть номер карти!");
         return;
     }
-    if (!sellerPage⠟⠟⠵⠟⠵⠟⠺⠟⠞⠵⠺⠺⠵⠺⠟⠺⠺⠵⠵⠟⠟sellerPage < 1 || sellerPage > 1000) {
+    if (!sellerPage || isNaN(sellerPage) || sellerPage < 1 || sellerPage > 1000) {
         alert("Введите корректный номер страницы продавца (1-1000)!");
         return;
     }
@@ -145,6 +145,7 @@ function generateQR() {
    
    
    
+
 
 
 
