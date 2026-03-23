@@ -1,5 +1,5 @@
 {
-  "name": "QR Генератор карт",
+  "name": "Генератор QR-коду",
   "short_name": "QRGen",
   "start_url": "/generator/",
   "display": "standalone",
