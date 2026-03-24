@@ -125,12 +125,51 @@ function generateQR() {
 
             <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"><\/script>
             <script>
-                new QRCode(document.getElementById("qrcode"), {
-                    text: "${url}",
-                    width: Math.min(window.innerWidth * 0.9, 400),
-                    height: Math.min(window.innerWidth * 0.9, 400),
-                    correctLevel: QRCode.CorrectLevel.H
-                });
+                const size = Math.min(window.innerWidth * 0.9, 400);
+
+const qrCode = new QRCodeStyling({
+
+    width: size,
+    height: size,
+
+    type: "svg",
+
+    data: "${url}",
+
+    image: "icon-192.png",
+
+    dotsOptions: {
+        type: "dots",
+        color: "#000000"
+    },
+
+    cornersSquareOptions: {
+        type: "extra-rounded",
+        color: "#000000"
+    },
+
+    cornersDotOptions: {
+        type: "dot",
+        color: "#000000"
+    },
+
+    backgroundOptions: {
+        color: "#ffffff"
+    },
+
+    imageOptions: {
+        margin: 10,
+        imageSize: 0.22,
+        hideBackgroundDots: true
+    },
+
+    qrOptions: {
+        errorCorrectionLevel: "H"
+    }
+
+});
+
+qrCode.append(document.getElementById("qrcode"));
             <\/script>
         </body>
         </html>
