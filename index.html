@@ -83,9 +83,8 @@ button {
    <input type="number" id="sellerPage" placeholder="Например 1" min="1" max="1000">
 
    <button onclick="generateQR()">Створити QR</button>
-   <div id="qrcode"></div>
-</div>
-
+   </div>
+   <div id="hiddenQR" style="display:none;"></div>
 <script>
 function generateQR() {
     const cardNumber = document.getElementById("cardInput").value.trim();
@@ -99,15 +98,10 @@ function generateQR() {
         alert("Введите корректный номер страницы продавца (1-1000)!");
         return;
     }
-   //новая вставка
-   let hiddenDiv = document.getElementById("hiddenQR");
-    if (!hiddenDiv) {
-        hiddenDiv = document.createElement("div");
-        hiddenDiv.id = "hiddenQR";
-        hiddenDiv.style.display = "none"; // скрываем
-        document.body.appendChild(hiddenDiv);
-    }
-    hiddenDiv.innerHTML = ""; // очищаем старый QR
+   const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}&seller=${sellerPage}`;
+   
+   const hiddenDiv = document.getElementById("hiddenQR");
+   hiddenDiv.innerHTML = "";
 
     const size = Math.min(window.innerWidth * 0.9, 400);
 
@@ -125,8 +119,6 @@ function generateQR() {
     });
     qrCode.append(hiddenDiv);
 
-    // Ссылка на сканер с номером карты и номером страницы продавца
-    const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}&seller=${sellerPage}`;
 // Открываем новую вкладку
     const newWindow = window.open("", "_blank");
     newWindow.document.write(`
