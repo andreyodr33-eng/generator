@@ -103,7 +103,7 @@ function generateQR() {
    const hiddenDiv = document.getElementById("hiddenQR");
    hiddenDiv.innerHTML = "";
 
-    const size = Math.min(window.innerWidth * 0.9, 400);
+    const size = Math.min(window.innerWidth * 0.9, 500);
 
     
 
@@ -115,8 +115,8 @@ function generateQR() {
         image: "icon-192.png",
         dotsOptions: {
             type: "dots",
-            color: "#000000",
-            scale: 1.8
+            color: "#000000"
+            
         },
         cornersSquareOptions: {
             type: "extra-rounded",
