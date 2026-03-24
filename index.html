@@ -116,6 +116,11 @@ function generateQR() {
         cornersDotOptions: { type: "dot", color: "#000000" },
         backgroundOptions: { color: "#ffffff" },
         imageOptions: { margin: 10, imageSize: 0.22, hideBackgroundDots: true },
+        qrOptions: { errorCorrectionLevel: "H" },
+        onRender: () => {
+          const qrClone = hiddenDiv.querySelector("svg").cloneNode(true);
+          newWindow.document.getElementById("qrcode").appendChild(qrClone);
+        }
     });
     qrCode.append(hiddenDiv);
 
