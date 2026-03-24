@@ -105,33 +105,57 @@ function generateQR() {
 
     const size = Math.min(window.innerWidth * 0.9, 400);
 
+    400);
+
     const qrCode = new QRCodeStyling({
         width: size,
         height: size,
         type: "svg",
         data: url,
         image: "icon-192.png",
-        dotsOptions: { type: "dots", color: "#000000" },
-        cornersSquareOptions: { type: "extra-rounded", color: "#000000" },
-        cornersDotOptions: { type: "dot", color: "#000000" },
-        backgroundOptions: { color: "#ffffff" },
-        imageOptions: { margin: 10, imageSize: 0.22, hideBackgroundDots: true },
-        qrOptions: { errorCorrectionLevel: "H" },
-        onRender: () => {
-          const qrClone = hiddenDiv.querySelector("svg").cloneNode(true);
-          newWindow.document.getElementById("qrcode").appendChild(qrClone);
+        dotsOptions: {
+            type: "dots",
+            color: "#000000"
+        },
+        cornersSquareOptions: {
+            type: "extra-rounded",
+            color: "#000000"
+        },
+        cornersDotOptions: {
+            type: "dot",
+            color: "#000000"
+        },
+        backgroundOptions: {
+            color: "#ffffff"
+        },
+        imageOptions: {
+            margin: 10,
+            imageSize: 0.22,
+            hideBackgroundDots: true
+        },
+        qrOptions: {
+            errorCorrectionLevel: "H"
         }
     });
+
     qrCode.append(hiddenDiv);
 
-// Открываем новую вкладку
+    // открываем вкладку
     const newWindow = window.open("", "_blank");
+
     newWindow.document.write(`
         <html>
         <head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
-                body { margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:white; }
+                body {
+                    margin:0;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    height:100vh;
+                    background:white;
+                }
             </style>
         </head>
         <body>
@@ -139,7 +163,26 @@ function generateQR() {
         </body>
         </html>
     `);
+
     newWindow.document.close();
+
+
+    // 🔴 Ждём пока QR реально создастся
+    setTimeout(() => {
+
+        const svg = hiddenDiv.querySelector("svg");
+
+        if (svg) {
+            const clone = svg.cloneNode(true);
+            newWindow.document.getElementById("qrcode").appendChild(clone);
+        } else {
+            newWindow.document.body.innerHTML = "QR не создан";
+        }
+
+    }, 300); // задержка 300мс
+}
+      
+
 
     // Клонируем готовый SVG и вставляем в новую вкладку
     const qrClone = hiddenDiv.querySelector("svg").cloneNode(true);
