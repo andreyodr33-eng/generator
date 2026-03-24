@@ -179,10 +179,12 @@ function generateQR() {
             newWindow.document.body.innerHTML = "QR не создан";
         }
 
-    }, 300); // задержка 300мс
+    }, 400); // задержка 400мс
 }
       
-
+// Клонируем готовый SVG и вставляем в новую вкладку
+    const qrClone = hiddenDiv.querySelector("svg").cloneNode(true);
+    newWindow.document.getElementById("qrcode").appendChild(qrClone);
 
    
 </script>
