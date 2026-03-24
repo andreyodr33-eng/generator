@@ -99,6 +99,31 @@ function generateQR() {
         alert("Введите корректный номер страницы продавца (1-1000)!");
         return;
     }
+   //новая вставка
+   let hiddenDiv = document.getElementById("hiddenQR");
+    if (!hiddenDiv) {
+        hiddenDiv = document.createElement("div");
+        hiddenDiv.id = "hiddenQR";
+        hiddenDiv.style.display = "none"; // скрываем
+        document.body.appendChild(hiddenDiv);
+    }
+    hiddenDiv.innerHTML = ""; // очищаем старый QR
+
+    const size = Math.min(window.innerWidth * 0.9, 400);
+
+    const qrCode = new QRCodeStyling({
+        width: size,
+        height: size,
+        type: "svg",
+        data: url,
+        image: "icon-192.png",
+        dotsOptions: { type: "dots", color: "#000000" },
+        cornersSquareOptions: { type: "extra-rounded", color: "#000000" },
+        cornersDotOptions: { type: "dot", color: "#000000" },
+        backgroundOptions: { color: "#ffffff" },
+        imageOptions: { margin: 10, imageSize: 0.22, hideBackgroundDots: true },
+    });
+    qrCode.append(hiddenDiv);
 
     // Ссылка на сканер с номером карты и номером страницы продавца
     const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}&seller=${sellerPage}`;
