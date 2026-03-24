@@ -127,84 +127,36 @@ function generateQR() {
 
     // Ссылка на сканер с номером карты и номером страницы продавца
     const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}&seller=${sellerPage}`;
-
-    // Открываем новую вкладку с белой страницей и QR
+// Открываем новую вкладку
     const newWindow = window.open("", "_blank");
     newWindow.document.write(`
         <html>
         <head>
-            <title>QR Code</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
-                body {
-                    margin: 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                    background: white;
-                }
+                body { margin:0; display:flex; justify-content:center; align-items:center; height:100vh; background:white; }
             </style>
         </head>
         <body>
             <div id="qrcode"></div>
-
-            <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"><\/script>
-            <script>
-                const size = Math.min(window.innerWidth * 0.9, 400);
-
-const qrCode = new QRCodeStyling({
-
-    width: size,
-    height: size,
-
-    type: "svg",
-
-    data: "${url}",
-
-    image: "icon-192.png",
-
-    dotsOptions: {
-        type: "dots",
-        color: "#000000"
-    },
-
-    cornersSquareOptions: {
-        type: "extra-rounded",
-        color: "#000000"
-    },
-
-    cornersDotOptions: {
-        type: "dot",
-        color: "#000000"
-    },
-
-    backgroundOptions: {
-        color: "#ffffff"
-    },
-
-    imageOptions: {
-        margin: 10,
-        imageSize: 0.22,
-        hideBackgroundDots: true
-    },
-
-    qrOptions: {
-        errorCorrectionLevel: "H"
-    }
-
-});
-
-qrCode.append(document.getElementById("qrcode"));
-            <\/script>
         </body>
         </html>
     `);
-
     newWindow.document.close();
+
+    // Клонируем готовый SVG и вставляем в новую вкладку
+    const qrClone = hiddenDiv.querySelector("svg").cloneNode(true);
+    newWindow.document.getElementById("qrcode").appendChild(qrClone);
 }
 </script>
 </body>
-</html>
+</html>  
+    
+    
+  
+        
+            
+
    
    
    
