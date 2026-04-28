@@ -200,7 +200,7 @@ if(startX===null) return;
 
 let dx = e.clientX-startX;
 
-if(dx < -60){
+if(dx < -30){
 /* влево */
 if(
 location.pathname.includes('index.html') ||
@@ -211,7 +211,7 @@ window.location.href='tables.html';
 }
 }
 
-if(dx > 60){
+if(dx > 30){
 /* вправо */
 if(location.pathname.includes('tables.html')){
 window.location.href='index.html';
