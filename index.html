@@ -185,70 +185,41 @@ function generateQR() {
       
 // Клонируем готовый SVG и вставляем в новую вкладку
 </script>
+
 <script>
+let startX = null;
 
-let startX = 0;
-let startY = 0;
+document.addEventListener('pointerdown', function(e){
+startX = e.clientX;
+});
 
-document.addEventListener(
-'touchstart',
-function(e){
+document.addEventListener('pointerup', function(e){
 
-const t = e.touches[0];
+if(startX===null) return;
 
-startX = t.clientX;
-startY = t.clientY;
+let dx = e.clientX-startX;
 
-},
-{passive:true}
-);
-
-
-document.addEventListener(
-'touchend',
-function(e){
-
-const t = e.changedTouches[0];
-
-let dx = t.clientX - startX;
-let dy = t.clientY - startY;
-
-
-/* игнорируем вертикальный скролл */
-if(Math.abs(dy) > Math.abs(dx)){
-return;
-}
-
-
-/* свайп влево */
-if(dx < -70){
-
+if(dx < -60){
+/* влево */
 if(
-location.pathname.includes("index.html")
-||
-location.pathname=="/"
+location.pathname.includes('index.html') ||
+location.pathname.endsWith('/developer/') ||
+location.pathname.endsWith('/')
 ){
-location.href="tables.html";
+window.location.href='tables.html';
+}
 }
 
+if(dx > 60){
+/* вправо */
+if(location.pathname.includes('tables.html')){
+window.location.href='index.html';
+}
 }
 
+startX=null;
 
-/* свайп вправо */
-if(dx > 70){
-
-if(
-location.pathname.includes("tables.html")
-){
-location.href="index.html";
-}
-
-}
-
-},
-{passive:true}
-);
-
+});
 </script>
 </body>
 </html>  
