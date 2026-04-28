@@ -93,7 +93,7 @@ function generateQR() {
         alert("Введите корректный номер страницы продавца (1-1000)!");
         return;
     }
-   const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}&seller=${sellerPage}`;
+   const qrText = `${url}?table=${table}`;
    
    const hiddenDiv = document.getElementById("hiddenQR");
    hiddenDiv.innerHTML = "";
