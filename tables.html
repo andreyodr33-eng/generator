@@ -183,67 +183,40 @@ function generateQR() {
 
 </script>
 <script>
-let startX = 0;
-let startY = 0;
 
-document.addEventListener(
-'touchstart',
-function(e){
+let startX = null;
 
-const t = e.touches[0];
+document.addEventListener('pointerdown', function(e){
+startX = e.clientX;
+});
 
-startX = t.clientX;
-startY = t.clientY;
+document.addEventListener('pointerup', function(e){
 
-},
-{passive:true}
-);
+if(startX===null) return;
 
+let dx = e.clientX-startX;
 
-document.addEventListener(
-'touchend',
-function(e){
-
-const t = e.changedTouches[0];
-
-let dx = t.clientX - startX;
-let dy = t.clientY - startY;
-
-
-/* игнорируем вертикальный скролл */
-if(Math.abs(dy) > Math.abs(dx)){
-return;
-}
-
-
-/* свайп влево */
-if(dx < -70){
-
+if(dx < -60){
+/* влево */
 if(
-location.pathname.includes("index.html")
-||
-location.pathname=="/"
+location.pathname.includes('index.html') ||
+location.pathname.endsWith('/developer/') ||
+location.pathname.endsWith('/')
 ){
-location.href="tables.html";
+window.location.href='tables.html';
+}
 }
 
+if(dx > 60){
+/* вправо */
+if(location.pathname.includes('tables.html')){
+window.location.href='index.html';
+}
 }
 
+startX=null;
 
-/* свайп вправо */
-if(dx > 70){
-
-if(
-location.pathname.includes("tables.html")
-){
-location.href="index.html";
-}
-
-}
-
-},
-{passive:true}
-);
+});
 </script>
 </body>
 </html>
