@@ -184,9 +184,83 @@ function generateQR() {
 }
       
 // Клонируем готовый SVG и вставляем в новую вкладку
-   
+</script>
+<script>
+let touchStartX = 0;
+let touchEndX = 0;
 
-   
+document.addEventListener(
+'touchstart',
+function(e){
+touchStartX =
+e.changedTouches[0].screenX;
+},
+false
+);
+
+document.addEventListener(
+'touchend',
+function(e){
+touchEndX =
+e.changedTouches[0].screenX;
+
+handleSwipe();
+},
+false
+);
+
+
+function handleSwipe(){
+
+let swipeDistance =
+touchStartX-touchEndX;
+
+
+/* свайп влево */
+if(swipeDistance > 80){
+
+goNext();
+
+}
+
+/* свайп вправо */
+if(swipeDistance < -80){
+
+goBack();
+
+}
+
+}
+
+
+/* какая страница сейчас */
+
+function goNext(){
+
+if(
+window.location.pathname
+.includes("index.html")
+||
+window.location.pathname=="/"
+){
+window.location.href=
+"tables.html";
+}
+
+}
+
+
+function goBack(){
+
+if(
+window.location.pathname
+.includes("tables.html")
+){
+window.location.href=
+"index.html";
+}
+
+}
 </script>
 </body>
 </html>  
