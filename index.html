@@ -186,81 +186,69 @@ function generateQR() {
 // Клонируем готовый SVG и вставляем в новую вкладку
 </script>
 <script>
-let touchStartX = 0;
-let touchEndX = 0;
+
+let startX = 0;
+let startY = 0;
 
 document.addEventListener(
 'touchstart',
 function(e){
-touchStartX =
-e.changedTouches[0].screenX;
+
+const t = e.touches[0];
+
+startX = t.clientX;
+startY = t.clientY;
+
 },
-false
+{passive:true}
 );
+
 
 document.addEventListener(
 'touchend',
 function(e){
-touchEndX =
-e.changedTouches[0].screenX;
 
-handleSwipe();
-},
-false
-);
+const t = e.changedTouches[0];
+
+let dx = t.clientX - startX;
+let dy = t.clientY - startY;
 
 
-function handleSwipe(){
-
-let swipeDistance =
-touchStartX-touchEndX;
+/* игнорируем вертикальный скролл */
+if(Math.abs(dy) > Math.abs(dx)){
+return;
+}
 
 
 /* свайп влево */
-if(swipeDistance > 80){
+if(dx < -70){
 
-goNext();
+if(
+location.pathname.includes("index.html")
+||
+location.pathname=="/"
+){
+location.href="tables.html";
+}
 
 }
+
 
 /* свайп вправо */
-if(swipeDistance < -80){
-
-goBack();
-
-}
-
-}
-
-
-/* какая страница сейчас */
-
-function goNext(){
+if(dx > 70){
 
 if(
-window.location.pathname
-.includes("index.html")
-||
-window.location.pathname=="/"
+location.pathname.includes("tables.html")
 ){
-window.location.href=
-"tables.html";
+location.href="index.html";
 }
 
 }
 
+},
+{passive:true}
+);
 
-function goBack(){
-
-if(
-window.location.pathname
-.includes("tables.html")
-){
-window.location.href=
-"index.html";
-}
-
-}
 </script>
 </body>
 </html>  
