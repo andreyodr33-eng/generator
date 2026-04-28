@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table QR Generator</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="favicon.ico" sizes="32x32" type="image/x-icon">         
+<meta name="theme-color" content="#4CAF50">
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(() => console.log('Service Worker зареєстрований'));
+}
+</script>
+<script src="https://unpkg.com/qr-code-styling/lib/qr-code-styling.js"></script>
+<style>
+body {
+  margin: 0;
+  background: #000;
+  color: #00ff99;
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+} 
+
+.box {
+  background: #111;
+  border: 2px solid #00ff99;
+  border-radius: 15px;
+  padding: 25px;
+  max-width: 350px;
+  width: 90%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+input, button {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #00ff99;
+  background: #000;
+  color: #00ff99;
+  margin-top: 15px;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+  transition: 0.2s;
+}
+button:hover {
+  background: #00ff99;
+  color: #000;
+}
+
+#qrcode { 
+   display: flex;
+   margin: 20px auto;
+   justify-content: center;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+   <h2>📇 Table QR Generator</h2>
+   <p>Enter the URL of your website:</p>
+   <input type="text" id="urlInput" placeholder="For example https://example.com/menu">
+
+   <p>Enter the table number:</p>
+   <input type="number" id="tableNumber" placeholder="For example 5" min="1" max="100">
+
+   <button onclick="generateQR()">Generate QR</button>
+   
+   <div id="hiddenQR" style="display:none;"></div>
+</div>
+
+<script>
+function generateQR() {
+    const cardNumber = document.getElementById("cardInput").value.trim();
+    const sellerPage = document.getElementById("sellerPage").value.trim();
+
+    if (!cardNumber) {
+        alert("Введіть номер карти!");
+        return;
+    }
+    if (!sellerPage || isNaN(sellerPage) || sellerPage < 1 || sellerPage > 1000) {
+        alert("Введите корректный номер страницы продавца (1-1000)!");
+        return;
+    }
+   const url = `https://andreyodr33-eng.github.io/developer/?data=${cardNumber}&seller=${sellerPage}`;
+   
+   const hiddenDiv = document.getElementById("hiddenQR");
+   hiddenDiv.innerHTML = "";
+
+    const size = Math.min(window.innerWidth * 0.9, 400);
+
+    
+
+    const qrCode = new QRCodeStyling({
+        width: size,
+        height: size,
+        type: "svg",
+        data: url,
+        image: "icon-192.png",
+        dotsOptions: {
+            type: "dots",
+            color: "#000000"
+            
+        },
+        cornersSquareOptions: {
+            type: "extra-rounded",
+            color: "#000000"
+        },
+        cornersDotOptions: {
+            type: "dot",
+            color: "#000000"
+        },
+        backgroundOptions: {
+            color: "#ffffff"
+        },
+        imageOptions: {
+            margin: 10,
+            imageSize: 0.22,
+            hideBackgroundDots: true
+        },
+        qrOptions: {
+            errorCorrectionLevel: "Q"
+        }
+    });
+
+    qrCode.append(hiddenDiv);
+
+    // открываем вкладку
+    const newWindow = window.open("", "_blank");
+
+    newWindow.document.write(`
+        <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+                body {
+                    margin:0;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    height:100vh;
+                    background:white;
+                }
+            </style>
+        </head>
+        <body>
+            <div id="qrcode"></div>
+        </body>
+        </html>
+    `);
+
+    newWindow.document.close();
+
+
+    // 🔴 Ждём пока QR реально создастся
+    setTimeout(() => {
+
+        const svg = hiddenDiv.querySelector("svg");
+
+        if (svg) {
+            const clone = svg.cloneNode(true);
+            newWindow.document.getElementById("qrcode").appendChild(clone);
+        } else {
+            newWindow.document.body.innerHTML = "QR не создан";
+        }
+
+    }, 400); // задержка 400мс
+}
+      
+// Клонируем готовый SVG и вставляем в новую вкладку
+   
+
+</script>
+<script>
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener(
+'touchstart',
+function(e){
+touchStartX =
+e.changedTouches[0].screenX;
+},
+false
+);
+
+document.addEventListener(
+'touchend',
+function(e){
+touchEndX =
+e.changedTouches[0].screenX;
+
+handleSwipe();
+},
+false
+);
+
+
+function handleSwipe(){
+
+let swipeDistance =
+touchStartX-touchEndX;
+
+
+/* свайп влево */
+if(swipeDistance > 80){
+
+goNext();
+
+}
+
+/* свайп вправо */
+if(swipeDistance < -80){
+
+goBack();
+
+}
+
+}
+
+
+/* какая страница сейчас */
+
+function goNext(){
+
+if(
+window.location.pathname
+.includes("index.html")
+||
+window.location.pathname=="/"
+){
+window.location.href=
+"tables.html";
+}
+
+}
+
+
+function goBack(){
+
+if(
+window.location.pathname
+.includes("tables.html")
+){
+window.location.href=
+"index.html";
+}
+
+}
+</script>
+</body>
+</html>
