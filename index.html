@@ -8,13 +8,6 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="favicon.ico" sizes="32x32" type="image/x-icon">         
 <meta name="theme-color" content="#4CAF50">
-<!-- Регистрация Service Worker -->
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js')
-    .then(() => console.log('Service Worker зарегистрирован'));
-}
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://unpkg.com/qr-code-styling/lib/qr-code-styling.js"></script>
 <style>
@@ -222,6 +215,14 @@ startX=null;
 
 });
 </script>
+<!-- Регистрация Service Worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(() => console.log('Service Worker зарегистрирован'));
+}
+</script>
+  
 </body>
 </html>  
     
