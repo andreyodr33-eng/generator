@@ -1,4 +1,4 @@
-const CACHE_NAME = "qr-generator-cache-v1";
+const CACHE_NAME = "qr-generator-cache-v2";
 const urlsToCache = [
   "/generator/",
   "/generator/generator.html",
