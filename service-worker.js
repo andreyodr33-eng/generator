@@ -7,7 +7,7 @@ const urlsToCache = [
     "./icon-180.png",
     "./icon-192.png",
     "./icon-512.png",
-    "./qrcode.min.js,
+    "./qrcode.styling.js,
     "./tables.html,
     "./favicon.ico
 ];
