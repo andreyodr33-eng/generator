@@ -1,4 +1,4 @@
-const CACHE_NAME = "qr-generator-cache-v3";
+const CACHE_NAME = "qr-generator-cache-v4";
 const urlsToCache = [
    "./",
     "./index.html",
@@ -7,7 +7,7 @@ const urlsToCache = [
     "./icon-180.png",
     "./icon-192.png",
     "./icon-512.png",
-    "./qrcode.styling.js,
+    "./qr-code.styling.js,
     "./tables.html,
     "./favicon.ico
 ];
