@@ -8,8 +8,8 @@ const urlsToCache = [
     "./icon-192.png",
     "./icon-512.png",
     "./qr-code-styling.js,
-    "./tables.html,
-    "./favicon.ico
+    "./tables.html
+    
 ];
 
 self.addEventListener("install", event => {
