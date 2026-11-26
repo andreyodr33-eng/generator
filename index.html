@@ -176,6 +176,51 @@ function generateQR() {
 
     }, 400); // задержка 400мс
 }
+ function shareCard() {
+
+        if (navigator.share) {
+
+            navigator
+                .share({
+                    title:
+                        currentLanguage === "ru"
+                            ? "Моя цифровая карточка"
+                            : "My digital card",
+
+                    text:
+                        currentLanguage === "ru"
+                            ? "Посмотрите мою цифровую карточку:"
+                            : "Check out my digital business card:",
+
+                    url:
+                        window.location.href,
+                })
+
+                .then(
+                    () =>
+                        console.log(
+                            "Shared successfully"
+                        )
+                )
+
+                .catch(
+                    (err) =>
+                        console.log(
+                            "Share failed:",
+                            err
+                        )
+                );
+
+        } else {
+
+            alert(
+                translations[currentLanguage]
+                    .sharingError
+            );
+        }
+    }
+
+
 
 // Клонируем готовый SVG и вставляем в новую вкладку
 </script>
