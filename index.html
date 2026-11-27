@@ -215,6 +215,19 @@ startX=null;
 
 });
 </script>
+<script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(registration => {
+                console.log("Service Worker зарегистрирован:", registration.scope);
+            })
+            .catch(error => {
+                console.error("Ошибка регистрации:", error);
+            });
+    });
+}
+</script>  
 </body>
 </html>  
     
