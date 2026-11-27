@@ -1,15 +1,14 @@
-const CACHE_NAME = "qr-generator-cache-v4";
+const CACHE_NAME = "qr-generator-cache-v5";
 const urlsToCache = [
-   "./",
+    "./",
     "./index.html",
+    "./tables.html",
     "./manifest.json",
+    "./qr-code-styling.js",
     "./icon-32.png",
     "./icon-180.png",
     "./icon-192.png",
-    "./icon-512.png",
-    "./qr-code-styling.js,
-    "./tables.html
-    
+    "./icon-512.png"
 ];
 
 self.addEventListener("install", event => {
